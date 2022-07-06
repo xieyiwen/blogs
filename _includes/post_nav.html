@@ -1,12 +1,19 @@
-<span style="text-align: center">
+<span style="text-align: center;width: 50%">
     <h3 class="post-directory-title mobile-hidden">Table of Contents</h3>
     <div id="post-directory-module" class="mobile-hidden">
         <section class="post-directory">
-            <ul>
-                {% for post in site.posts %}
-                    {% include post.html %}
+            <dl>
+                {% for post in site.posts limit:20%}
+                <dt>
+                    {% for category in post.categories %}
+                        <span class="term"><{{ category }}></span>
+                    {% endfor %}
+                    <a href="{{ site.url }}{{ post.url }}" rel="bookmark" title="{{ post.title }}" itemprop="url" class="entry-content">{{ post.title }}</a>
+
+
+                </dt>
                 {% endfor %}
-            </ul>
+            </dl>
         </section>
     </div>
 </span>
