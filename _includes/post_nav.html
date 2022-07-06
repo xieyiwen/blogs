@@ -1,0 +1,12 @@
+<span style="text-align: center">
+    <h3 class="post-directory-title mobile-hidden">Table of Contents</h3>
+    <div id="post-directory-module" class="mobile-hidden">
+        <section class="post-directory">
+            <ul>
+                {% for post in site.posts %}
+                    {% include post.html %}
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+</span>
