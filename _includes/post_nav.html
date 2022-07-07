@@ -6,11 +6,9 @@
                 {% for post in site.posts limit:20%}
                 <dt>
                     {% for category in post.categories %}
-                        <span class="term"><{{ category }}></span>
+                        <span class="term">[{{ category }}]</span>
                     {% endfor %}
                     <a href="{{ site.url }}{{ post.url }}" rel="bookmark" title="{{ post.title }}" itemprop="url" class="entry-content">{{ post.title }}</a>
-
-
                 </dt>
                 {% endfor %}
             </dl>

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Redis分布式锁
-categories: 技术笔记, 后端技术, Redis
+categories: [后端技术, Redis]
 date: 2021-07-07 18:30:00
 keywords: redis
 ---
