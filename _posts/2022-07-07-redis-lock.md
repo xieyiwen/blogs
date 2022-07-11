@@ -2,7 +2,7 @@
 layout: post
 title: Redis分布式锁
 categories: [后端技术, Redis]
-date: 2021-07-07 18:30:00
+date: 2022-07-07
 keywords: redis
 ---
 
@@ -59,6 +59,5 @@ Created: July 7, 2021 6:30 PM
 
 ## 参考
 
-[分布式锁的实现之 redis 篇](https://xiaomi-info.github.io/2019/12/17/redis-distributed-lock/)
-
-[浅析 Redis 分布式锁解决方案](https://www.infoq.cn/article/dvaaj71f4fbqsxmgvdce)
+1. [分布式锁的实现之 redis 篇](https://xiaomi-info.github.io/2019/12/17/redis-distributed-lock/)
+2. [浅析 Redis 分布式锁解决方案](https://www.infoq.cn/article/dvaaj71f4fbqsxmgvdce)

@@ -3,7 +3,7 @@
     <div id="post-directory-module" class="mobile-hidden">
         <section class="post-directory">
             <dl>
-                {% for post in site.posts limit:20%}
+                {% for post in site.posts %}
                 <dt>
                     {% for category in post.categories %}
                         <span class="term">[{{ category }}]</span>
