@@ -1,7 +1,7 @@
 ---
 layout: post
 title: TCP连接建立
-categories: [后端技术, TCP]
+categories: [网络基础, TCP]
 date: 2022-07-07
 keywords: tcp
 ---
