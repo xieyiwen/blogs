@@ -6,4 +6,4 @@
 #### Personal share
 Better show: https://xieyiwen.github.io
 
-Thanks your attention, if you have any questions, please feel free to make issue.  
+Thanks for your attention, if you have any questions, please feel free to make issue.  
