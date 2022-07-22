@@ -5,9 +5,10 @@
             <dl>
                 {% for post in site.posts %}
                 <dt>
+                    <span class="term">
                     {% for category in post.categories %}
-                        <span class="term">[{{ category }}]</span>
-                    {% endfor %}
+                        [{{ category }}]
+                    {% endfor %}</span>
                     <a href="{{ site.url }}{{ post.url }}" rel="bookmark" title="{{ post.title }}" itemprop="url" class="entry-content">{{ post.title }}</a>
                 </dt>
                 {% endfor %}
