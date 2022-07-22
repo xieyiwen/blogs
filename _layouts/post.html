@@ -2,46 +2,46 @@
 <html lang="en">
 {% include head.html %}
 <body>
-    <div style="margin-top: 20px;height: 30px">
-        <a style="margin-left: 10%" href="/index.html">首页</a>
-    </div>
-    <section class="collection-head small geopattern" data-pattern-id="{{ page.title | truncate: 15}}">
-        <div class="container">
-            <div class="collection-title">
-                <h3 class="collection-header">{{ page.title }}</h3>
-                {% if page.subtitle %}
-                <div class="collection-info">
+<div style="margin-top: 20px;height: 30px">
+    <a style="margin-left: 10%" href="/index.html">首页</a>
+</div>
+<section class="collection-head small geopattern" data-pattern-id="{{ page.title | truncate: 15}}">
+    <div class="container">
+        <div class="collection-title">
+            <h3 class="collection-header">{{ page.title }}</h3>
+            {% if page.subtitle %}
+            <div class="collection-info">
                         <span class="meta-info">
                             {{ page.subtitle}}
                         </span>
-                </div>
-                {% endif %}
             </div>
+            {% endif %}
         </div>
-    </section>
-    <!-- / .banner -->
-    <section class="container content">
-        <div class="columns">
-            <div class="column two-thirds">
-                <article class="article-content markdown-body">
-                    {{ content }}
-                </article>
-            </div>
+    </div>
+</section>
+<!-- / .banner -->
+<section class="container content">
+    <div class="columns">
+        <div class="column two-thirds">
+            <article class="article-content markdown-body">
+                {{ content }}
+            </article>
         </div>
-        <div class="navigate">
-            <dl>
-                {% if page.previous %}
-                <dt><a href="{{ page.previous.url }}">上一篇：{{ page.previous.title }}</a></dt>
-                {% endif %}
-                {% if page.next %}
-                <dt><a href="{{ page.next.url }}">下一篇：{{ page.next.title }}</a></dt>
-                {% endif %}
-            </dl>
-        </div>
-    </section>
-    <!-- /section.content -->
+    </div>
+    <div class="navigate">
+        <dl>
+            {% if page.previous %}
+            <dt><a href="{{ page.previous.url }}">上一篇：{{ page.previous.title }}</a></dt>
+            {% endif %}
+            {% if page.next %}
+            <dt><a href="{{ page.next.url }}">下一篇：{{ page.next.title }}</a></dt>
+            {% endif %}
+        </dl>
+    </div>
+</section>
+<!-- /section.content -->
 
-    {% include footer.html %}
+{% include footer.html %}
 </body>
 </html>
 <style scoped>
@@ -53,8 +53,17 @@
         width: 70%;
         margin-left: 20%;
     }
+
     .navigate {
         margin-top: 30px;
         margin-bottom: 30px;
     }
+
+    .highlight code {
+        color: #006699;
+        line-height: 10px;
+        margin: 5px;
+        list-style: decimal;
+    }
+
 </style>
