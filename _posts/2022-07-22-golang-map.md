@@ -63,7 +63,7 @@ map一般称之为哈希映射表或者哈希表，key无序。
 
 ## 二、数据结构
 
-```go
+```text
     const (
       // bucket能存放的元素数量。 8个
         bucketCntBits = 3
@@ -116,7 +116,7 @@ map一般称之为哈希映射表或者哈希表，key无序。
 
 map的核心是hmap。
 
-```go
+```text
     type hmap struct {
         // Note: the format of the hmap is also encoded in cmd/compile/internal/gc/reflect.go.
         // Make sure this stays in sync with the compiler's definition.
@@ -138,7 +138,7 @@ map的核心是hmap。
     
     可知，buckets和extra在内存上是不连续的，所以我们将其分为正常桶和溢出桶。
     
-    ```go
+    ```text
     type mapextra struct {
         // 限于key 和 value  都不是指针，并且可以被inline(size<=128 bit)
       // 可以用mapextra来存储overflow，避免扫描整个map
@@ -156,7 +156,7 @@ map的核心是hmap。
 
 bmap存储的是key哈希值的高8位，通过高8位的比对，可以减少访问桶中键值对的次数来提升性能。
 
-```go
+```text
     type bmap struct {
         tophash [bucketCnt]uint8
     }
@@ -166,7 +166,7 @@ bmap存储的是key哈希值的高8位，通过高8位的比对，可以减少�
 
 runtime.bmap中的其他字段在运行时也是通过计算出内存的地址来访问的，所以定义中没有相对应的字段，下面通过编译函数`cmd/compile/internal/gc.bmap`来重建bmap：
 
-```go
+```text
     type bmap struct {
         topbits  [8]uint8
         keys     [8]keytype
@@ -188,11 +188,11 @@ Go初始化哈希表有两种方式：<span style="color:green">字面量初始�
 
 形如：
 
-```go
+```text
     make(map[k]v, hint)
 ```
 
-```go
+```text
     // 如果编译器认为map和第一个bucket可以直接创建在栈上，那么h和bucket可能是非空的。
     // 如果h不为空，则可以直接使用h创建map
     // 如果bucket不为空，则可以直接复用为本map的第一个bucket（覆盖）
@@ -238,7 +238,7 @@ Go初始化哈希表有两种方式：<span style="color:green">字面量初始�
 
 如果桶的数量大于2^4,则会创建2^(B-4)个溢出桶。
 
-```go
+```text
     func makeBucketArray(t *maptype, b uint8, dirtyalloc unsafe.Pointer) (buckets unsafe.Pointer, nextOverflow *bmap) {
         base := bucketShift(b)
         nbuckets := base
@@ -265,7 +265,7 @@ Go初始化哈希表有两种方式：<span style="color:green">字面量初始�
 
 形如：
 
-```go
+```text
     hash := map[string]int{
         "1": 2,
         "3": 4,
@@ -275,7 +275,7 @@ Go初始化哈希表有两种方式：<span style="color:green">字面量初始�
 
 在编译时，会通过  `cmd/compile/internal/gc.maplit`  初始化：
 
-```go
+```text
     func maplit(n *Node, m *Node, init *Nodes) {
         a := nod(OMAKE, nil, nil)
         a.Esc = n.Esc
@@ -294,7 +294,7 @@ Go初始化哈希表有两种方式：<span style="color:green">字面量初始�
 
 也就是说，如果元素不超过25个，编译器会将其转换为如下代码
 
-```go
+```text
     hash := make(map[string]int, 3)
     hash["1"] = 2
     hash["3"] = 4
@@ -303,7 +303,7 @@ Go初始化哈希表有两种方式：<span style="color:green">字面量初始�
 
 如果超过，则为key和value分别创建数组，然后通过for循环，插入数据。
 
-```go
+```text
     hash := make(map[string]int, 26)
     vstatk := []string{"1", "2", "3", ... ， "26"}
     vstatv := []int{1, 2, 3, ... , 26}
@@ -318,7 +318,7 @@ Go初始化哈希表有两种方式：<span style="color:green">字面量初始�
 
 当创建的哈希表被分配到栈上，且容量小于8时（没有溢出桶）。Go在编译时会使用makemap_small来进行快速的初始化。
 
-```go
+```text
     func makemap_small() *hmap {
         h := new(hmap)
         h.hash0 = fastrand()
@@ -341,7 +341,7 @@ mapaccess1返回指向目标值的指针，mapaccess2则多返回一个用于表
 
 下面对mapaccess2举例解析。
 
-```go
+```text
     func mapaccess2(t *maptype, h *hmap, key unsafe.Pointer) (unsafe.Pointer, bool) {
         // 竞态检查，此处不展开
         if raceenabled && h != nil {
@@ -422,7 +422,7 @@ mapaccess1返回指向目标值的指针，mapaccess2则多返回一个用于表
 
 该函数与  `runtime.mapaccess1`  比较相似，我们将其分成几个部分依次分析，首先是函数会根据传入的键拿到对应的哈希和桶：
 
-```go
+```text
     func mapassign(t *maptype, h *hmap, key unsafe.Pointer) unsafe.Pointer {
         if h == nil {
             panic(plainError("assignment to entry in nil map"))
@@ -466,7 +466,7 @@ mapaccess1返回指向目标值的指针，mapaccess2则多返回一个用于表
 
 遍历桶的key，返回新key的存放位置。如果key重复，则value进行覆盖；如果key不存在， 则追加到bucket的尾部。
 
-```go
+```text
     func mapassign(t *maptype, h *hmap, key unsafe.Pointer) unsafe.Pointer {
         ...
         var inserti *uint8
@@ -514,7 +514,7 @@ mapaccess1返回指向目标值的指针，mapaccess2则多返回一个用于表
 
 如果溢出桶太多或者装载率过大，则哈希表扩容，然后重新定位key存放的位置。
 
-```go
+```text
     func mapassign(t *maptype, h *hmap, key unsafe.Pointer) unsafe.Pointer {
         ...
         if !h.growing() && (overLoadFactor(h.count+1, h.B) || tooManyOverflowBuckets(h.noverflow, h.B)) {
@@ -552,7 +552,7 @@ mapaccess1返回指向目标值的指针，mapaccess2则多返回一个用于表
 
 插入完成后，解除写操作标志。
 
-```go
+```text
     func mapassign(t *maptype, h *hmap, key unsafe.Pointer) unsafe.Pointer {
         ...
     done:
@@ -575,7 +575,7 @@ mapaccess1返回指向目标值的指针，mapaccess2则多返回一个用于表
 1. 装载因子达到阈值(go设定6.5)。
 2. 溢出桶过多。
 
-```go
+```text
     func hashGrow(t *maptype, h *hmap) {
         // If we've hit the load factor, get bigger.
         // Otherwise, there are too many overflow buckets,
