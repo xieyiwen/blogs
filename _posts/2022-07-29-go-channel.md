@@ -127,7 +127,7 @@ func tcMake(n *ir.CallExpr) ir.Node {
 
 在channel初始化中，会检查是否需要设置缓冲区，如果没有指定缓冲区，则默认设定为0表示channel无缓冲。
 
-OMAKAECHAN在SSA中间代码阶段之前被转换成`runtime.makechan`,
+OMAKAECHAN在编译SSA中间代码阶段之前被转换成`runtime.makechan`,
 ```text
 // src/cmd/compile/internal/walk/expr.go
 func walkExpr1(n ir.Node, init *ir.Nodes) ir.Node {
@@ -739,11 +739,11 @@ chanrecv的atomic保证了channel未关闭和缓冲区为空的顺序。
 通过对channel的解读，可以知道：
 1. 不能往关闭的channel中发送数据;
 2. 关闭的channel可以反复的读取数据，如果数据不是发送者发送的，则会得到received=false的标志;
-3. 通过channel通信的数据，是从发送端的goroutine的栈中直接复制到接收端的gotoutine的栈中的；
+3. 通过channel通信的数据，是从发送端的goroutine的栈中直接复制到接收端的goroutine的栈中的；
 4. 存在非阻塞的channel使用，就是结合select；
 
 
 ## 八、参考
 
-1. [Channel](https://draveness.me/golang/docs/part3-runtime/ch06-concurrency/golang-channel/)
-2. [通信原语](https://golang.design/under-the-hood/zh-cn/part1basic/ch03lang/chan/)
+1. [Go 语言 Channel 实现原理精要 | Go 语言设计与实现](https://draveness.me/golang/docs/part3-runtime/ch06-concurrency/golang-channel/)
+2. [3.6 通信原语 | Go 语言原本](https://golang.design/under-the-hood/zh-cn/part1basic/ch03lang/chan/)
